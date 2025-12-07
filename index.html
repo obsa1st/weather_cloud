@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>wether app</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="card">
+        <div class="search">
+            <input type="text" placeholder="enter city name" >
+            <button> <img src="search.png"></button>
+
+        </div>
+        <div class="wethear">
+
+            <img src="clear.png" class="wethear-icon">
+            <h1 class="city">dire dawaa</h1>
+            <h1 class="temp">20°C</h1>
+        </div>
+        <div class="details">
+            <div class="col">
+                <h4>Humidity</h4>
+                <h5 class="Humidity">85%</h5>
+            </div>
+            <div class="col">
+                <h4>Wind</h4>
+                <h5 class="wind">85km/h</h5>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const apiKey="72efdadb0b3e05d2b7abed45f818fbd3";
+        const apiUrl="https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+
+        const searchBox=document.querySelector(".search input");
+        const searchBtn=document.querySelector(".search button");
+
+        async function checkwethear(city){
+            var response = await fetch(apiUrl + city + `&appid=${apiKey}`);
+            var data= await response.json();
+            console.log(data);
+            document.querySelector(".city").innerHTML=data.name;
+            document.querySelector(".temp").innerHTML=Math.round(data.main.temp); 
+            document.querySelector(".Humidity").innerHTML=data.main.humidity+"%";
+            document.querySelector(".wind").innerHTML=data.wind.speed+"km/h";
+        }
+         searchBtn.addEventListener('click',()=>{
+            checkwethear(searchBox.value);
+         })
+    </script>
+
+</body>
+</html>
